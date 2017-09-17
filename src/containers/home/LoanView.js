@@ -8,9 +8,10 @@ import LoanModal from './LoanModal.js'
 
 const LoanView = props => {
   const modalName = `loan-${props.id}`
+  const canBorrow = !((props.available > 0) && (props.user.balance > 2000000))
 
   const handleOpen = name => () => {
-    props.show(modalName, { message: `This is a ${name} modal` })
+    props.show(modalName, {...props, canBorrow})
   };
 
   return (
@@ -27,8 +28,12 @@ const LoanView = props => {
   )
 };
 
+const mapStateToProps = state => ({
+  user: state.loans.user,
+})
+
 
 export default connect(
-  null,
+  mapStateToProps,
   dispatch => bindActionCreators({ show }, dispatch)
 )(LoanView)
