@@ -9,7 +9,7 @@ export const floatToCommaSeparated = (number) => {
   let numStr = number.toFixed(2).toString()
 
   for(let [i, j] = [numStr.indexOf('.') - 1, 1]; i > 0; i--, j++) {
-    if(j % 3 == 0) {
+    if(j % 3 === 0) {
       numStr = numStr.slice(0, i) + ',' + numStr.slice(i, numStr.length)
     }
   }

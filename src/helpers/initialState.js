@@ -1,5 +1,5 @@
 export default {
-  loans: [
+  loan_data: [
     {
       id: "1",
       title: "Voluptate et sed tempora qui quisquam.",
