@@ -12,14 +12,13 @@ Broken:
 - some extra stuff going on in the store that's about adding extra functionality
 
 
-
-The below is the generic create react app readme
---------
-
-This repo was bootstrapped with Create React App and used [this Medium tutorial](https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f) to set up Redux and React-Router v4.
+This repo was bootstrapped with Create React App and used [this Medium tutorial](https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f) to set up Redux and React-Router v4, I've included this in the commit history
 
 
-The below is the generic create-react-app readme
+!!! The below is the generic create-react-app readme !!!
+
+
+
 ------------------------
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
