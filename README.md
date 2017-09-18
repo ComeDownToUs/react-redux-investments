@@ -1,3 +1,21 @@
+
+To run:  `npm run start`
+To test (just the helpers):  `npm run test`
+
+Ran out of time, so there are some bits that aren't working fully. I used a boilerplate of sorts that was already constructed, this is within the commits. Opting to use redux, I ran into some issues with Redux form and couldn't find a reliable tutorial, got it working though (forgot about the differences with arrow functions).  
+My plan was to have time artifically represented and allow the user to view accrued interest data on the about page, ran out of time for this so there are remnants.
+
+Broken:
+- investing in the middle entry accidentally deletes a loan, I can't see what's wrong with my slices but it's probably obvious, feedback appreciated
+- no feedback when invalid entries are submitted beyond the lack of a response
+- layout: didn't spend any time on this really.
+- some extra stuff going on in the store that's about adding extra functionality
+
+
+
+The below is the generic create react app readme
+--------
+
 This repo was bootstrapped with Create React App and used [this Medium tutorial](https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f) to set up Redux and React-Router v4.
 
 

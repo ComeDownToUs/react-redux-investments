@@ -1,0 +1,36 @@
+
+.loan-card{
+  background-color: #cfc;
+  margin: 4px;
+  height: initial;
+  padding: 12px;
+}
+
+.unavailable{
+  filter: grayscale(80%) blur(1px);
+}
+.unavailable .btn{
+  display: none;
+}
+
+.title{
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  font-size: 2.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: left;
+}
+
+.close-icon{
+  display:block;
+  float: right;
+}
+
+@media (min-width:768px){
+  .sm-right{
+    text-align: right;
+  }
+}

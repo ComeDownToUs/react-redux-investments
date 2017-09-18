@@ -4,34 +4,27 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Button, Modal } from 'react-bootstrap'
 import { connectModal } from 'redux-modal'
-import {
-  invest
-} from '../../modules/loans'
+import InvestForm from './InvestForm.js'
+import { invest } from '../../modules/loans'
 
 const MyModal = (props) => {
 
-  const investSum = () => {
-    console.log()
-  } 
+  const submit = (values) => {
+    console.log(values)
+    props.invest(props.id, values.investsum)
+    props.handleHide()
+  }
 
   return (
     <Modal show={props.show}>
-      <form>
-        <Modal.Header>
-          <Modal.Title>{props.title}</Modal.Title>
-        </Modal.Header>
+      <Modal.Header>
+        <Button onClick={props.handleHide} className="close-icon">X</Button>
+        <Modal.Title>{props.title}</Modal.Title>
+      </Modal.Header>
 
-        <Modal.Body>
-          Please enter a sum you wish to invest:  
-          <input 
-            type="text" 
-            placeholder={`Range: 0-$${props.available}`}/>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={props.handleHide}>Close</Button>
-          <Button bsStyle="primary" onClick={investSum.bind(this)}>Save changes</Button>
-        </Modal.Footer>
-      </form>
+      <Modal.Body>
+        <InvestForm onSubmit={submit} {...props}/>
+      </Modal.Body>
     </Modal>
   )
 }
@@ -53,5 +46,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   invest,
 }, dispatch)
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(DynamicModal);

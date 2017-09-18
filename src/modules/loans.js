@@ -6,16 +6,53 @@ export const NOTIFICATION = 'loans/NOTIFICATION'
 export default (state = initialState, action) => {
   switch (action.type) {
     case INVEST:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          balance: action.userBalance,
-          loans: [
-            ...state.user.loans,
-            action.newLoan,
-          ]
-        },
+      const loan = getLoan(state, action.loanId)
+      if (loan === null){
+        return {
+          ...state,
+          notification: {
+            display: true,
+            message: 'no such loan',
+          }
+        }
+      }
+      if (validateInvestment(loan, state.user, action.amount)){
+        const loanIndex = getLoanIndex(state.loan_data, action.loanId)
+        const newBalanceLoan = loan.available - action.amount
+        const updatedLoan = {
+          ...loan, 
+          available: newBalanceLoan,
+        }
+        const newLoanData = [
+            ...state.loan_data.slice(0, loanIndex),
+            updatedLoan,
+            ...state.loan_data.slice(loanIndex+1)
+        ]
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            balance: state.user.balance - action.amount,
+            loans: [
+              ...state.user.loans,
+              {
+                id: action.loanId,
+                amount: action.amount,
+                time: state.time,
+              }
+            ]
+          },
+          loan_data: newLoanData,        
+        }
+      }
+      else{
+        return {
+          ...state,
+          notification: {
+            display: true,
+            message: 'insufficient funds',
+          }
+        }
       }
     case NOTIFICATION:
       return {
@@ -30,6 +67,28 @@ export default (state = initialState, action) => {
   }
 }
 
+const validateInvestment = (loan, user, amount) => {
+  if( (loan.available - amount) < 0 || (user.balance - amount) < 0)
+    return false
+  else
+    return true
+}
+
+const getLoan = (state, loanId) => {
+  for(let i=0; i<state.loan_data.length; i++)
+    if (state.loan_data[i].id === loanId)
+      return state.loan_data[i]
+  return null
+}
+
+const getLoanIndex = (loans, loanId) => {
+  for (let i in loans) {
+    if (loans[i].id === loanId)
+      return i
+  }
+  return -1
+}
+
 export const openNotification = (state, message) => dispatch => {
   dispatch({
     type: NOTIFICATION,
@@ -42,31 +101,14 @@ export const closeNotification = (state) => dispatch => {
   dispatch({
     type: NOTIFICATION,
     display: true,
-    message: 'Oh yes',
+    message: '',
   })
 }
 
-const getLoan = (state, loanId) => {
-  for(const loan in state.loans){
-    if (loan.id === loanId)
-      return loan
-  }
-  return null
-}
-
-export const invest = (state, loanId, amount) => {
-  const loan = getLoan(state, loanId)
-
-  if(amount < state.user.balance && amount < loan.available) {
-    return dispatch => dispatch({
-      type: INVEST,
-      userBalance: state.user.balance - amount,
-      newLoan: {
-        id: loanId,
-        amount: amount,
-        date: state.time,
-      }
-    })
-  }
-  openNotification(state, "Loan cannot be completed")
+export const invest = (loanId, amount) => dispatch => {
+  dispatch({
+    type: INVEST,
+    amount,
+    loanId
+  })
 }
